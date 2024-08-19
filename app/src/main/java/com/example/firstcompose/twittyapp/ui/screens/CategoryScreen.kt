@@ -30,36 +30,68 @@ import androidx.navigation.NavController
 import com.example.firstcompose.twittyapp.viewmodels.CategoriesViewModel
 
 @Composable
-fun CategoryScreen(navController: NavController){
-    val categoryViewModel: CategoriesViewModel = hiltViewModel()
-    val categories = categoryViewModel.categories.collectAsState()
-    Log.e("repo", "category screen $categories")
+fun CategoryScreen(
+    navController: NavController,
+    categoryViewModel: CategoriesViewModel = hiltViewModel()
+) {
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(4.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-        ){
-        items(categories.value) {
-            CategoryItem(it, navController)
+    if (categoryViewModel.mCategories.isLoading) {
+        ShowLoading()
+    } else if (!categoryViewModel.mCategories.isFailure.isNullOrEmpty()) {
+        ShowError(error = categoryViewModel.mCategories.isFailure.toString())
+    } else {
+        categoryViewModel.mCategories.data?.let { data ->
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(4.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                items(data) {
+                    CategoryItem(it, navController)
+                }
+            }
         }
     }
+
+//    categoryViewModel.mCategories.apply {
+//        if(this.isLoading){
+//            ShowLoading()
+//        }
+//
+//        if(isFailure != null){
+//            ShowError(error = isFailure)
+//        }
+//
+//        if(!data.isNullOrEmpty()){
+//            LazyVerticalGrid(
+//                columns = GridCells.Fixed(2),
+//                contentPadding = PaddingValues(4.dp),
+//                verticalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                items(data as List<String>) {
+//                    CategoryItem(it, navController)
+//                }
+//            }
+//        }
+//    }
 }
 
 @Composable
-fun CategoryItem(title: String, navController: NavController){
-    Box(modifier = Modifier
-        .padding(4.dp)
-        .size(160.dp)
-        .clip(RoundedCornerShape(8.dp))
-        .border(1.dp, Color.Gray)
-        .clickable {
-            navController.navigate("detail/${title}")
-        },
+fun CategoryItem(title: String, navController: NavController) {
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .size(160.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .border(1.dp, Color.Gray)
+            .clickable {
+                navController.navigate("detail/${title}")
+            },
         contentAlignment = Alignment.BottomCenter,
 
-        ){
-        Text(text = title,
+        ) {
+        Text(
+            text = title,
             modifier = Modifier
                 .background(Color.Red)
         )

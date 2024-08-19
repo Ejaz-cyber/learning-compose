@@ -1,10 +1,7 @@
 package com.example.firstcompose.twittyapp.stateListeners
 
-sealed interface UIState<out T> {
-
-    data class Success<T>(val data: T): UIState<T>
-
-    data class Failure(val error: String?): UIState<Nothing>
-
-    object Loading: UIState<Nothing>
-}
+data class UIState<out T> (
+    val isLoading: Boolean = false,
+    val isFailure : String? = null,
+    val data : T? = null
+)

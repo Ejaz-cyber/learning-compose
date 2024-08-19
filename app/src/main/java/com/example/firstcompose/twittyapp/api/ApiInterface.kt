@@ -17,7 +17,6 @@ interface ApiInterface {
     @GET("tweet-categories")
     suspend fun getCategories(): Response<List<ExampleJson2KtKotlin>>
 
-//    @GET("/todos/1")
     @GET("todos/1")
     suspend fun getTodo(): Response<Todo>
 }

@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
 //    val url = "https://jsonplaceholder.typicode.com"
-    val url = "https://crudcrud.com/api/437b9dd47a194f65b13adf4691f533d8/"
+    val url = "https://crudcrud.com/api/5b350476580c4fb98e1aaeb82c77e2df/"
 
 
     @Singleton

@@ -13,7 +13,7 @@ import java.io.Serializable
 data class ExampleJson2KtKotlin (
 
     @SerializedName("_id"        ) var Id         : String?           = null,
-    @SerializedName("categories" ) var categories : ArrayList<String> = arrayListOf()
+    @SerializedName("categories" ) var categories : List<String> = arrayListOf()
 
 )
 
